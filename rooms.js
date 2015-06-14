@@ -40,12 +40,29 @@ module.exports = {
             room.states.set(0).done();
         },
     },
+    'Living Room': {
+        buttons: {
+        },
+        lights: {
+            1: new Light(32, 1, 0),
+            2: new Light(36, 1, 0),
+        },
+        states: {
+            0: [],
+            1: [1],
+            2: [1, 2],
+            3: [2],
+        },
+        setup: function(room) {
+            room.states.set(0);
+        },
+    },
     'Exterior Lighting': {
         buttons: {
             1: new VButton(),
         },
         lights: {
-            1: new Light(36, 1, 0),
+            1: new Light(22, 1, 0),
         },
         states: {
             0: [],

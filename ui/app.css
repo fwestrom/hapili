@@ -1,0 +1,63 @@
+html body {
+    background: black;
+}
+
+.panel {
+    background: dimgray;
+}
+.panel-default {
+    background: darkgray;
+    border-color: midnightblue;
+}
+.panel-heading {
+    background: dimgray;
+}
+.panel-default>.panel-heading {
+    background: gray;
+}
+.panel-title {
+    /*background: darkgray;*/
+}
+
+.panel-body {
+    background: silver;
+}
+
+/*.btn-default.active,
+.btn-default:active,
+.btn-default.focus,
+.btn-default:focus,
+.btn-default:hover {
+    background-color: inherit;
+}*/
+
+.light-button {
+    color: #400040;
+}
+
+.light-button.active,
+.light-button:active,
+.light-button.focus,
+.light-button:focus,
+.light-button:hover {
+    color: #600060;
+}
+
+
+.off,
+.off.active,
+.off:active,
+.off.focus,
+.off:focus,
+.off:hover {
+    background: lightgray;
+}
+
+.on,
+.on.active,
+.on:active,
+.on.focus,
+.on:focus,
+.on:hover {
+    background: yellow;
+}

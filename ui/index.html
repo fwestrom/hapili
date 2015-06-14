@@ -6,12 +6,16 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'></meta>
     <title>Hapili</title>
 
+    <link href="favicon.png" rel="icon" type="image/png"></link>
     <link href='css/bootstrap.min.css' rel='stylesheet'></link>
     <link href='app.css' rel='stylesheet'></link>
     <script src='angular.js'></script>
     <script src='angular-resource.js'></script>
     <script src='lodash.js'></script>
     <script src='app.js'></script>
+    <script src='api.js'></script>
+    <script src='AppController.js'></script>
+    <script src='pageVisibilityService.js'></script>
 </head>
 <body ng-controller='AppController as app'>
     <div class='navbar navbar-inverse navbar-fixed-top' role='navigation'>
@@ -50,20 +54,23 @@
                         class='btn btn-default'
                         ng-repeat='button in room.buttons'
                         ng-bind='button.name'
-                        ng-click='button.press.refresh()'
+                        ng-click='press(button)'
                         />
+                        <!--ng-disabled="isBusy"-->
                 </div>
                 <div class='btn-group' role='group' aria-label='{{room.name}} lights'>
                     <button disabled='true' type='button' class='btn btn-default'>
                         Lights:
                     </button>
                     <button
-                        type='button'
-                        class='btn btn-default'
-                        ng-repeat='light in room.lights'
-                        ng-bind='light.value'
-                        ng-click='light.toggle.refresh()'
+                        type="button"
+                        class="btn btn-default light-button"
+                        ng-repeat="light in room.lights"
+                        ng-bind="light.name"
+                        ng-class="{off: !light.value, 'on': light.value}"
+                        ng-click="toggle(light)"
                         />
+                        <!--ng-disabled="isBusy"-->
                 </div>
             </div>
         </div>
