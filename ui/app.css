@@ -1,5 +1,10 @@
-html body {
-    background: black;
+body {
+    background-color: #303236;
+}
+
+.navbar-fixed-top {
+                      /*linear-gradient(#8a9196, #7a8288 60%, #70787d);*/
+    background-image: linear-gradient(#202020, #2A2A2A 15%, #202020 95%);
 }
 
 .panel {
@@ -10,36 +15,40 @@ html body {
     border-color: midnightblue;
 }
 .panel-heading {
-    background: dimgray;
+    background-image: linear-gradient(#505050, #626266 5%, #707079 40%, #606264);
 }
 .panel-default>.panel-heading {
     background: gray;
 }
 .panel-title {
-    /*background: darkgray;*/
+    display:flex;
+    justify-content: space-between;
+}
+.panel-title .room-name {
+    align-self: center;
+    font-size: x-large;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .panel-body {
-    background: silver;
+    background: linear-gradient(#303030, #404040 5%, #484848 15%, #383838 97%, #282828);
+    display: flex;
+    justify-content: center;
 }
 
-/*.btn-default.active,
-.btn-default:active,
-.btn-default.focus,
-.btn-default:focus,
-.btn-default:hover {
-    background-color: inherit;
-}*/
+.room-button {
+}
 
-.light-button {
+.room-light {
     color: #400040;
 }
 
-.light-button.active,
-.light-button:active,
-.light-button.focus,
-.light-button:focus,
-.light-button:hover {
+.room-light.active,
+.room-light:active,
+.room-light.focus,
+.room-light:focus,
+.room-light:hover {
     color: #600060;
 }
 
@@ -50,7 +59,8 @@ html body {
 .off.focus,
 .off:focus,
 .off:hover {
-    background: lightgray;
+    /*background: lightgray;*/
+    background: darkgray;
 }
 
 .on,
@@ -59,5 +69,5 @@ html body {
 .on.focus,
 .on:focus,
 .on:hover {
-    background: yellow;
+    background: lemonchiffon;
 }
