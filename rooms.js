@@ -42,6 +42,7 @@ module.exports = {
     },
     'Living Room': {
         buttons: {
+            1: new VButton(),
         },
         lights: {
             1: new Light(32, 1, 0),
@@ -54,6 +55,12 @@ module.exports = {
             3: [2],
         },
         setup: function(room) {
+            room.buttons[1].on('press', function() {
+                return room.states.next();
+            });
+            room.buttons[1].on('longpress', function() {
+                room.states.set(0);
+            });
             room.states.set(0);
         },
     },
