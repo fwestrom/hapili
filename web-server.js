@@ -22,7 +22,7 @@ function create(options) {
     app.use(express.static('node_modules/angular-resource', {}));
     app.use(express.static('node_modules/bootstrap/dist', {}));
     app.use(express.static('node_modules/jquery/dist', {}));
-    app.use(express.static('node_modules/lodash/dist', {}));
+    app.use(express.static('node_modules/lodash', {}));
 
     return _.extend(root, {
         start: _.partial(start, app, options),

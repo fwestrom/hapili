@@ -1,23 +1,24 @@
 {
-    "name": "hapili",
-    "version": "0.0.1",
-    "description": "Happy Pi Lights: A home controller and mobile-friendly web user interface for use with Raspberry Pi and basic electrical components.",
-    "dependencies": {
-        "bluebird": "~2.7.1",
-        "pi-gpio": "0.0.6",
-        "lodash": "~2.4.1",
-        "express": "~4.11.0",
-        "minimist": "~1.1.0",
-        "log4js": "~0.6.22",
-        "jquery": "~2.1.3",
-        "bootstrap": "~3.3.1",
-        "angular-resource": "~1.3.9",
-        "angular": "~1.3.9",
-        "wiring-pi": "~2.0.0"
-    },
-    "scripts": {
-        "deploy": "rsync -avz -e \"ssh\" --exclude .git --exclude .gitignore --exclude node_modules ./ berry.al.qtort.com:/opt/hapili/; rsync -avz -e \"ssh\" node_modules/bootstrap/dist/ berry.al.qtort.com:/opt/hapili/node_modules/bootstrap/dist/",
-        "start": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili\" -l hapili.log hapili.js",
-        "stop": "forever stop hapili"
-    }
+  "name": "hapili",
+  "version": "0.0.1",
+  "description": "Happy Pi Lights: A home controller and mobile-friendly web user interface for use with Raspberry Pi and basic electrical components.",
+  "dependencies": {
+    "angular": "~1.3.9",
+    "angular-resource": "~1.3.9",
+    "bluebird": "~2.7.1",
+    "bootstrap": "~3.3.1",
+    "express": "~4.11.0",
+    "jquery": "~2.1.3",
+    "lodash": "^3.9.3",
+    "log4js": "~0.6.22",
+    "minimist": "~1.1.0",
+    "pi-gpio": "0.0.6",
+    "striptags": "^2.0.2",
+    "wiring-pi": "~2.0.0"
+  },
+  "scripts": {
+    "deploy": "rsync -avz -e \"ssh\" --exclude .git --exclude .gitignore --exclude node_modules ./ berry.al.qtort.com:/opt/hapili/; rsync -avz -e \"ssh\" node_modules/bootstrap/dist/ berry.al.qtort.com:/opt/hapili/node_modules/bootstrap/dist/",
+    "start": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili\" -l hapili.log hapili.js",
+    "stop": "forever stop hapili"
+  }
 }
