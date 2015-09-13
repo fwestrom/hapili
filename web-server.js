@@ -18,11 +18,11 @@ function create(options) {
     var root = use(app, options.path);
 
     app.use(express.static('ui', {}));
+    app.use(express.static('node_modules/lodash', {}));
     app.use(express.static('node_modules/angular', {}));
     app.use(express.static('node_modules/angular-resource', {}));
     app.use(express.static('node_modules/bootstrap/dist', {}));
     app.use(express.static('node_modules/jquery/dist', {}));
-    app.use(express.static('node_modules/lodash', {}));
 
     return _.extend(root, {
         start: _.partial(start, app, options),

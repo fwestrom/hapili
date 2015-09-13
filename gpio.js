@@ -10,7 +10,8 @@ var log = require('./logging.js').getLogger('gpio');
 var options = require('./options.js');
 
 module.exports = exports = {
-    GpioPort: { 'arm|linux': WpiGpioPort }[options.arch] || FakeGpioPort,
+    //GpioPort: { 'arm|linux': WpiGpioPort }[options.arch] || FakeGpioPort,
+    GpioPort: FakeGpioPort,
     FakeGpioPort: FakeGpioPort,
     PiGpioPort: PiGpioPort,
     WpiGpioPort: WpiGpioPort,

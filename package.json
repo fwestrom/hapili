@@ -17,7 +17,7 @@
     "wiring-pi": "~2.0.0"
   },
   "scripts": {
-    "deploy": "rsync -avz -e \"ssh\" --exclude .git --exclude .gitignore --exclude node_modules ./ berry.al.qtort.com:/opt/hapili/; rsync -avz -e \"ssh\" node_modules/bootstrap/dist/ berry.al.qtort.com:/opt/hapili/node_modules/bootstrap/dist/",
+    "deploy": "rsync -avz -e \"ssh\" --exclude .git --exclude .gitignore --exclude node_modules ./ hapili.al.qtort.com:/opt/hapili/; rsync -avz -e \"ssh\" node_modules/bootstrap/dist/ hapili.al.qtort.com:/opt/hapili/node_modules/bootstrap/dist/",
     "start": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili\" -l hapili.log hapili.js",
     "stop": "forever stop hapili"
   }
