@@ -1,12 +1,16 @@
+//#define USE_ETHERNET2
 #include <SPI.h>
+#ifdef USE_ETHERNET2
 #include <DhcpV2_0.h>
-//#include <DnsV2_0.h>
-//#include <EthernetClientV2_0.h>
-//#include <EthernetServerV2_0.h>
 #include <EthernetV2_0.h>
 #include <EthernetUdpV2_0.h>
-//#include <Messenger.h>
-//#include <utilV2_0.h>
+#else
+#include <Dhcp.h>
+#include <Ethernet.h>
+#include <EthernetUdp.h>
+#endif
+
+#include "HapiliMessage.h"
 
 #define W5200_CS  10
 #define SDCARD_CS 4
@@ -17,7 +21,6 @@ char buf[UDP_TX_PACKET_MAX_SIZE];
 int dhcpSuccess = 0;
 EthernetServer server = EthernetServer(80);
 EthernetUDP sock;
-//Messenger message = Messenger();
 
 void onMessageReady();
 
@@ -47,8 +50,6 @@ void setup()
   server.begin();
   sock.begin(666);
 
-//  message.attach(onMessageReady);
-
   Serial.println("Ready.\n");
 }
 
@@ -63,7 +64,7 @@ void loop()
   int nbytes = sock.parsePacket();
   if (nbytes > 0)
   {
-    
+
       Serial.print("udp|recv| nbytes: ");
       Serial.print(nbytes);
 
@@ -77,10 +78,3 @@ void loop()
       sock.endPacket();
   }
 }
-
-void onMessageReady()
-{
-    
-}
-
-
