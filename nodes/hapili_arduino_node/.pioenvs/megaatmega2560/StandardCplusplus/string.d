@@ -1,0 +1,31 @@
+.pioenvs\megaatmega2560\StandardCplusplus\string.o: \
+ .pioenvs\megaatmega2560\StandardCplusplus\string.cpp \
+ .pioenvs\megaatmega2560\StandardCplusplus/basic_definitions \
+ .pioenvs\megaatmega2560\StandardCplusplus/system_configuration.h \
+ .pioenvs\megaatmega2560\StandardCplusplus/char_traits \
+ .pioenvs\megaatmega2560\StandardCplusplus/exception \
+ .pioenvs\megaatmega2560\StandardCplusplus/memory \
+ .pioenvs\megaatmega2560\StandardCplusplus/new \
+ .pioenvs\megaatmega2560\StandardCplusplus/cstddef \
+ .pioenvs\megaatmega2560\StandardCplusplus/cstdlib \
+ .pioenvs\megaatmega2560\StandardCplusplus/iterator_base \
+ .pioenvs\megaatmega2560\StandardCplusplus/utility.h \
+ .pioenvs\megaatmega2560\StandardCplusplus/cstdio \
+ .pioenvs\megaatmega2560\StandardCplusplus/string \
+ .pioenvs\megaatmega2560\StandardCplusplus/func_exception \
+ .pioenvs\megaatmega2560\StandardCplusplus/vector \
+ .pioenvs\megaatmega2560\StandardCplusplus/iterator \
+ .pioenvs\megaatmega2560\StandardCplusplus/iosfwd \
+ .pioenvs\megaatmega2560\StandardCplusplus/algorithm \
+ .pioenvs\megaatmega2560\StandardCplusplus/functional \
+ .pioenvs\megaatmega2560\StandardCplusplus/type_traits \
+ .pioenvs\megaatmega2560\StandardCplusplus/initializer_list \
+ .pioenvs\megaatmega2560\StandardCplusplus/string_iostream \
+ .pioenvs\megaatmega2560\StandardCplusplus/istream \
+ .pioenvs\megaatmega2560\StandardCplusplus/ios \
+ .pioenvs\megaatmega2560\StandardCplusplus/locale \
+ .pioenvs\megaatmega2560\StandardCplusplus/cctype \
+ .pioenvs\megaatmega2560\StandardCplusplus/streambuf \
+ .pioenvs\megaatmega2560\StandardCplusplus/istream_helpers \
+ .pioenvs\megaatmega2560\StandardCplusplus/ostream \
+ .pioenvs\megaatmega2560\StandardCplusplus/ostream_helpers
