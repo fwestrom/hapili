@@ -1,25 +1,51 @@
 #include "HapiliMessage.h"
+#include "Debug.h"
 
 HapiliMessage* HapiliMessageSerializer::Deserialize(Stream& stream) {
-    if ((size_t)stream.available() < sizeof(HapiliMessage::Header)) {
-        return NULL;
-    }
-
-    HapiliMessage::Header header;;
-    size_t nbytes = stream.readBytes((char*)&header, (size_t)sizeof(HapiliMessage::Header));
+    size_t nbytes = stream.available();
     if (nbytes < sizeof(HapiliMessage::Header)) {
+        debug("Unexpected packet size ");
+        debug(nbytes);
+        debugln();
         return NULL;
     }
 
-    switch (header.type) {
-        case HapiliMessage::Query:
-            return new QueryMessage(header);
-
-        case HapiliMessage::Set:
-            return new SetMessage(header);
+    HapiliMessage::Header header;
+    nbytes = stream.readBytes((byte*)&header, (size_t)sizeof(HapiliMessage::Header));
+    if (nbytes < sizeof(HapiliMessage::Header)) {
+        debug("Unexpected packet size ");
+        debug(nbytes);
+        debugln();
+        return NULL;
     }
 
-    return NULL;
+    if (header.version != 1) {
+        debug("Unexpected HapiliMessage version ");
+        debug(header.version);
+        debugln();
+    }
+
+    HapiliMessage *msg;
+    switch (header.type) {
+        case HapiliMessage::Set:
+            debugln("SetMessage");
+            msg = new SetMessage(header);
+            break;
+
+        case HapiliMessage::Configure:
+            debugln("ConfigureMessage");
+            msg = new ConfigureMessage(header);
+            break;
+
+        case HapiliMessage::Query:
+        default:
+            debugln("QueryMessage");
+            msg = new QueryMessage(header);
+            break;
+    }
+
+    msg->Deserialize(stream, true);
+    return msg;
 }
 
 void HapiliMessageSerializer::Release(HapiliMessage* hm) {
@@ -73,6 +99,9 @@ std::vector<SetMessage::Update> SetMessage::getUpdates() {
     return updates;
 }
 
+ConfigureMessage::ConfigureMessage(HapiliMessage::Header& header) : HapiliMessage(header) {
+}
+
 void ConfigureMessage::Deserialize(Stream& stream, bool skipHeader) {
     HapiliMessage::Deserialize(stream, skipHeader);
 
@@ -86,4 +115,12 @@ void ConfigureMessage::Deserialize(Stream& stream, bool skipHeader) {
 
 std::vector<ConfigureMessage::PinMode> ConfigureMessage::getPinModes() {
     return pinModes;
+}
+
+AckMessage::AckMessage(HapiliMessage& msg) : HapiliMessage(msg.header) {
+    header.type = HapiliMessage::Ack;
+}
+
+void AckMessage::Serialize(UDP& stream) {
+    stream.write((byte*)&header, sizeof(Header));
 }

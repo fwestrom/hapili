@@ -3,9 +3,9 @@
 
 #include <Arduino.h>
 #include <Stream.h>
-#include <Udp.h>
 #include <StandardCplusplus.h>
 #include <vector>
+#include "Net.h"
 
 class HapiliMessage;
 
@@ -24,12 +24,15 @@ public:
 /// </summary>
 class HapiliMessage {
 public:
-    enum Type : uint16_t {
+    enum Type : uint8_t {
         Query = 0,
         Set = 1,
+        Configure = 26,
+        Ack = 128,
     };
 
     struct Header {
+        uint8_t version;
         uint16_t id;
         Type type;
     };
@@ -42,19 +45,16 @@ protected:
     virtual ~HapiliMessage();
     virtual void Deserialize(Stream& stream, bool skipHeader);
     virtual void SerializeHeader(UDP& to);
-
-private:
     Header header;
 
     friend class HapiliMessageSerializer;
+    friend class AckMessage;
 };
 
 class QueryMessage : public HapiliMessage {
-protected:
-    virtual void Serialize(Stream& stream);
-
 private:
     QueryMessage(HapiliMessage::Header& header);
+
     friend class HapiliMessageSerializer;
 };
 
@@ -69,7 +69,6 @@ public:
 
 protected:
     virtual void Deserialize(Stream& stream, bool skipHeader);
-    virtual void Serialize(Stream& stream);
 
 private:
     SetMessage(HapiliMessage::Header& header);
@@ -89,10 +88,20 @@ public:
 
 protected:
     virtual void Deserialize(Stream& stream, bool skipHeader);
-    virtual void Serialize(Stream& stream);
 
 private:
+    ConfigureMessage(HapiliMessage::Header& header);
     std::vector<PinMode> pinModes;
+
+    friend class HapiliMessageSerializer;
+};
+
+class AckMessage : public HapiliMessage {
+public:
+    AckMessage(HapiliMessage& msg);
+    virtual void Serialize(UDP& stream);
+
+private:
 };
 
 #endif

@@ -11,9 +11,6 @@
  .pioenvs\megaatmega2560\FrameworkArduino/Arduino.h \
  .pioenvs\megaatmega2560\FrameworkArduinoVariant/pins_arduino.h \
  .pioenvs\megaatmega2560\FrameworkArduino/Stream.h \
- .pioenvs\megaatmega2560\FrameworkArduino/Udp.h \
- .pioenvs\megaatmega2560\FrameworkArduino/IPAddress.h \
- .pioenvs\megaatmega2560\FrameworkArduino/Printable.h \
  .pioenvs\megaatmega2560\StandardCplusplus/StandardCplusplus.h \
  .pioenvs\megaatmega2560\StandardCplusplus/vector \
  .pioenvs\megaatmega2560\StandardCplusplus/basic_definitions \
@@ -33,4 +30,20 @@
  .pioenvs\megaatmega2560\StandardCplusplus/algorithm \
  .pioenvs\megaatmega2560\StandardCplusplus/functional \
  .pioenvs\megaatmega2560\StandardCplusplus/type_traits \
- .pioenvs\megaatmega2560\StandardCplusplus/initializer_list
+ .pioenvs\megaatmega2560\StandardCplusplus/initializer_list src\Net.h \
+ .pioenvs\megaatmega2560\SPI/SPI.h \
+ .pioenvs\megaatmega2560\Ethernet_Shield_W5200/DhcpV2_0.h \
+ .pioenvs\megaatmega2560\Ethernet_Shield_W5200/EthernetUdpV2_0.h \
+ .pioenvs\megaatmega2560\FrameworkArduino/Udp.h \
+ .pioenvs\megaatmega2560\FrameworkArduino/IPAddress.h \
+ .pioenvs\megaatmega2560\FrameworkArduino/Printable.h \
+ .pioenvs\megaatmega2560\Ethernet_Shield_W5200/EthernetV2_0.h \
+ .pioenvs\megaatmega2560\Ethernet_Shield_W5200/EthernetClientV2_0.h \
+ .pioenvs\megaatmega2560\FrameworkArduino/Print.h \
+ .pioenvs\megaatmega2560\FrameworkArduino/Client.h \
+ .pioenvs\megaatmega2560\FrameworkArduino/IPAddress.h \
+ .pioenvs\megaatmega2560\Ethernet_Shield_W5200/EthernetServerV2_0.h \
+ .pioenvs\megaatmega2560\FrameworkArduino/Server.h \
+ .pioenvs\megaatmega2560\Ethernet_Shield_W5200/DhcpV2_0.h \
+ .pioenvs\megaatmega2560\Ethernet_Shield_W5200/EthernetUdpV2_0.h \
+ src\Debug.h
