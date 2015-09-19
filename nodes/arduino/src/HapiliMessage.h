@@ -17,7 +17,7 @@ class HapiliMessageSerializer {
 public:
     HapiliMessage* Deserialize(Stream& stream);
     void Release(HapiliMessage *msg);
-    void Serialize(HapiliMessage &msg, UDP &sock);
+    void Serialize(HapiliMessage &msg, UDP &sock); // TODO: Replace UDP with writable stream of some sort
 };
 
 /// <summary>
