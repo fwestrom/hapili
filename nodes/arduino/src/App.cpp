@@ -2,6 +2,7 @@
 #include "Hub.h"
 #include "UdpChannel.h"
 #include "AckHandler.h"
+#include "ConfigureHandler.h"
 
 byte macAddress[] = { 0xDE, 0xAD, 0xBE, 0xFF, 0xFF, 0x04 };
 
@@ -14,6 +15,7 @@ void setup()
   debuginit();
   debugln("Starting...");
 
+  hub.Register(new ConfigureHandler());
   hub.Register(new AckHandler());
   net.Setup();
   udpChannel.Open();
