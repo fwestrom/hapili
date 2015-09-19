@@ -48,10 +48,14 @@ HapiliMessage* HapiliMessageSerializer::Deserialize(Stream& stream) {
     return msg;
 }
 
-void HapiliMessageSerializer::Release(HapiliMessage* hm) {
-    if (hm) {
-        delete hm;
+void HapiliMessageSerializer::Release(HapiliMessage *msg) {
+    if (msg) {
+        delete msg;
     }
+}
+
+void HapiliMessageSerializer::Serialize(HapiliMessage &msg, UDP &stream) {
+    msg.Serialize(stream);
 }
 
 HapiliMessage::HapiliMessage(HapiliMessage::Header& header) : header(header) {
@@ -74,8 +78,8 @@ HapiliMessage::Type HapiliMessage::getType() {
     return header.type;
 }
 
-void HapiliMessage::SerializeHeader(UDP& to) {
-    to.write((uint8_t*)&header, (size_t)sizeof(Header));
+void HapiliMessage::Serialize(UDP& to) {
+    to.write((byte*)&header, sizeof(Header));
 }
 
 QueryMessage::QueryMessage(HapiliMessage::Header& header) : HapiliMessage(header) {
@@ -122,5 +126,5 @@ AckMessage::AckMessage(HapiliMessage& msg) : HapiliMessage(msg.header) {
 }
 
 void AckMessage::Serialize(UDP& stream) {
-    stream.write((byte*)&header, sizeof(Header));
+    HapiliMessage::Serialize(stream);
 }

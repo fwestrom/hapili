@@ -1,3 +1,6 @@
+#ifndef NET_H
+#define NET_H
+
 #define USE_ETHERNET2
 
 #include <SPI.h>
@@ -9,4 +12,16 @@
 #include <Dhcp.h>
 #include <Ethernet.h>
 #include <EthernetUdp.h>
+#endif
+
+class Net {
+public:
+    Net(byte mac[]);
+    void Setup();
+    void Maintain();
+
+private:
+    byte *mac;
+};
+
 #endif

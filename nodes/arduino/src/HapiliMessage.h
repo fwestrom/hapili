@@ -16,7 +16,8 @@ class HapiliMessage;
 class HapiliMessageSerializer {
 public:
     HapiliMessage* Deserialize(Stream& stream);
-    void Release(HapiliMessage *hm);
+    void Release(HapiliMessage *msg);
+    void Serialize(HapiliMessage &msg, UDP &sock);
 };
 
 /// <summary>
@@ -44,7 +45,7 @@ protected:
     HapiliMessage(Header& header);
     virtual ~HapiliMessage();
     virtual void Deserialize(Stream& stream, bool skipHeader);
-    virtual void SerializeHeader(UDP& to);
+    virtual void Serialize(UDP& stream);
     Header header;
 
     friend class HapiliMessageSerializer;
@@ -99,6 +100,8 @@ private:
 class AckMessage : public HapiliMessage {
 public:
     AckMessage(HapiliMessage& msg);
+
+protected:
     virtual void Serialize(UDP& stream);
 
 private:
