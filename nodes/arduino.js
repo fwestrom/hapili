@@ -29,7 +29,7 @@ function ArduinoNode(host, port, offValue)
     _.extend(this, _.bindAll({
         url: 'hapili://' + host + ':' + port,
         light: function light(id) {
-            return _.extend(new ArduinoNodeLight(id, {
+            return _.bindAll(_.extend(new ArduinoNodeLight(id, {
                 init: init.bind(this),
                 set: set,
                 off: offValue || 0,
@@ -38,7 +38,7 @@ function ArduinoNode(host, port, offValue)
                     : 1,
             }), {
                 url: 'hapili://' + host + ':' + port + '/' + id,
-            });
+            }));
         },
         refresh: function() {
             log.debug('refresh| %s:%s', host, port);
@@ -69,18 +69,22 @@ function ArduinoNode(host, port, offValue)
     }.bind(this));
 
     sock.on('message', function onmessage(buf, from) {
-        var msgId = buf.readUInt16BE(0);
+        var verison = buf.readUInt8(0);
+        var msgId = buf.readUInt16BE(1);
+        var type = buf.readUInt8(3);
         var stateText = '';
-        for (var i = 0; i < buf.length - 2; i++) {
-            var value = buf.readUInt8(2 + i);
+        for (var i = 0; i < buf.length - 4; i++) {
+            var value = buf.readUInt8(4 + i);
             state[i] = value;
             stateText += value;
         }
-        log.debug('recv| from: %s:%s, msgId: %s, nbytes: %s', from.address, from.port, msgId, buf.length, buf, stateText);
-        _.forEach(_.remove(waiting, { msgId: msgId }), function(token) {
-            clearTimeout(token.timeout);
-            token.resolve();
-        });
+        log.debug('recv| from: %s:%s, msgId: %s, type: %s, nbytes: %s', from.address, from.port, msgId, type, buf.length, buf, stateText);
+        if (type === 128) {
+            _.forEach(_.remove(waiting, { msgId: msgId }), function(token) {
+                clearTimeout(token.timeout);
+                token.resolve();
+            });
+        }
     });
 
     var bindPromise = new Promise(function(resolve, reject) {
@@ -110,11 +114,12 @@ function ArduinoNode(host, port, offValue)
     }
 
     function call(msgType) {
-        var buf = new Buffer(2 + arguments.length)
+        var buf = new Buffer(3 + arguments.length)
         var msgId = ++sendCount;
-        buf.writeUInt16BE(msgId, 0);
+        buf.writeUInt8(1, 0);
+        buf.writeUInt16BE(msgId, 1);
         for (var i = 0; i < arguments.length; i++) {
-            buf.writeUInt8(arguments[i], 2 + i);
+            buf.writeUInt8(arguments[i], 3 + i);
         }
         log.debug('send| to: %s:%s, msgId: %s, nbytes: %s', host, port, msgId, buf.length, buf);
         return bindPromise
