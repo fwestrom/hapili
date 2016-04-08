@@ -1,6 +1,6 @@
-module.exports = function app(_, inject, Promise) {
+module.exports = function app(_, inject, logging, Promise) {
     var events = require('events');
-    var log; = logging.getLogger('app');
+    var log = logging.getLogger('app');
 
     var app = _(new events.EventEmitter())
         .tap(function(app) { app.setMaxListeners(100); })

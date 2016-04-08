@@ -5,6 +5,7 @@ var inject = injector({
     defaultOptions: {
     },
 });
+
 inject(require('./app.js')).then(function(app) {
     return inject(function(_, dgram, logging, options, Promise) {
         var log = logging.getLogger('hapili-node');

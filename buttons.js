@@ -115,6 +115,42 @@ function Button(pin) {
     }
 }
 
+util.inherits(Button2, events.EventEmitter);
+function Button2(id) {
+    events.EventEmitter.call(this);
+
+    var wpi = require('wiring-pi');
+    wpi.pinMode(id, wpi.INPUT);
+    wpi.pullUpDnControl(id, wpi.PUD_UP);
+    wpi.wiringPiISR(id, wpi.INT_EDGE_BOTH, onInterrupt);
+
+    var me = this;
+    var state = { value: 1 };
+    var transient = null;
+    var timeout = null;
+
+    function onInterrupt() {
+        setImmediate(function() {
+            var value = wpi.digitalRead(id);
+            if (value === state.value && value === transient) {
+                return;
+            }
+
+            transient = value;
+            if (transient === state.value) {
+                return;
+            }
+
+            clearTimeout(timeout);
+            timeout = setTimeout(function() {
+                state = { value: transient };
+                timeout = null;
+                me.emit(value ? 'up' : 'down');
+            }, 25);
+        });
+    }
+}
+
 util.inherits(VButton, EventEmitter2);
 function VButton() {
     EventEmitter2.call(this);
