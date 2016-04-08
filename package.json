@@ -17,6 +17,9 @@
     "striptags": "^2.0.2",
     "wiring-pi": "~2.0.0"
   },
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  },
   "scripts": {
     "deploy": "if [ -v $HAPILI_HOST ]; then echo \"Which HAPILI_HOST?\n\" >&2; else rsync -a --exclude-from=.rsync-exclude . $HAPILI_HOST:/opt/hapili; fi",
     "Ddeploy": "if test \"${HAPILI_HOST+defined}\"; \nthen\n echo What HAPILI_HOST? & exit -1; else rsync -a --exclude-from=.rsync-exclude . $HAPILI_HOST:/opt/hapili; fi",
