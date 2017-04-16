@@ -7,24 +7,8 @@ let yargs = require('yargs');
 yargs
     .usage('Usage:\n  $0 <command> [options]')
     .command(require('./lib/cli/deploy'))
-    .command({
-        command: 'server',
-        description: 'Run Hapili as a master server, and start the web server for access to the user interface.',
-        builder: {
-        },
-        handler: argv => {
-            return require('./lib/hapili-server.js');
-        },
-    })
-    .command({
-        command: 'node',
-        description: 'Run Hapili as a member node.',
-        builder: {
-        },
-        handler: argv => {
-            return require('./lib/hapili-node.js');
-        },
-    })
+    .command(require('./lib/cli/server'))
+    .command(require('./lib/cli/node'))
     .option('arch', {
         description: 'Override the system os/arch identifier.',
         default: os.arch() + '|' + os.platform(),
