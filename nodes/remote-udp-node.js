@@ -5,7 +5,7 @@ var Promise = require('bluebird');
 var dgram = require('dgram');
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
-var logging = require('../logging.js');
+var logging = require('../lib/logging.js');
 Promise.promisifyAll(dgram);
 
 _.extend(exports, {

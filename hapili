@@ -1,45 +1,19 @@
 #!/usr/bin/node
 'use strict';
 let _ = require('lodash');
-let child_process = require('child_process');
 let os = require('os');
 let yargs = require('yargs');
 
 yargs
     .usage('Usage:\n  $0 <command> [options]')
-    .command({
-        command: 'deploy <server>',
-        description: 'Deploys Hapili to a target server, specified by its dns name or ip address.',
-        handler: argv => {
-            let server = argv.server;
-            if (!server) {
-                console.error('Which server?');
-                return process.exit(1);
-            }
-
-            var args = ['-rv', '--exclude-from=.rsync-exclude', '.', server + ':/opt/hapili'];
-            var child = child_process.execFile('rsync', args, function(error, stdout, stderr) {
-                if (stdout) {
-                    console.info(stdout);
-                }
-                if (stderr) {
-                    console.error(stderr);
-                }
-                if (error) {
-                    console.error(error);
-                    return process.exit(1);
-                }
-                console.info('ok.');
-            });
-        },
-    })
+    .command(require('./lib/cli/deploy'))
     .command({
         command: 'server',
         description: 'Run Hapili as a master server, and start the web server for access to the user interface.',
         builder: {
         },
         handler: argv => {
-            return require('./hapili-server.js');
+            return require('./lib/hapili-server.js');
         },
     })
     .command({
@@ -48,7 +22,7 @@ yargs
         builder: {
         },
         handler: argv => {
-            return require('./hapili-node.js');
+            return require('./lib/hapili-node.js');
         },
     })
     .option('arch', {
@@ -61,7 +35,7 @@ yargs
         choices: ['fatal', 'error', 'warn', 'info', 'debug', 'trace'],
         default: 'info',
     })
-    .demandCommand()
+    .demandCommand(1, 'Which command?')
     .help('help')
     .alias('help', 'h')
     .wrap(yargs.terminalWidth())
