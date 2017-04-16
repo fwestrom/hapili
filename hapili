@@ -1,78 +1,68 @@
-#!/usr/bin/nodejs
+#!/usr/bin/node
+'use strict';
+let _ = require('lodash');
+let child_process = require('child_process');
+let os = require('os');
+let yargs = require('yargs');
 
-var _ = require('lodash');
-var child_process = require('child_process');
-var minimist = require('minimist');
-var os = require('os');
+yargs
+    .usage('Usage:\n  $0 <command> [options]')
+    .command({
+        command: 'deploy <server>',
+        description: 'Deploys Hapili to a target server, specified by its dns name or ip address.',
+        handler: argv => {
+            let server = argv.server;
+            if (!server) {
+                console.error('Which server?');
+                return process.exit(1);
+            }
 
-var options = minimist(process.argv.slice(2), {
-    default: {
-        arch: os.arch() + '|' + os.platform(),
-        'log.level': 'debug',
-    },
-});
-
-_.extend(exports, {
-    help: usage,
-    deploy: deploy,
-});
-
-if (module === require.main) {
-    return main();
-}
-
-function main() {
-    var command = options._[0];
-    if (!command) {
-        usage();
-        console.error('I need a command to do anything useful.');
-        return process.exit(1);
-    }
-
-    var commandFn = _.get(exports, command);
-    if (!commandFn) {
-        console.error('Command not implemented:', command);
-        return process.exit(1);
-    }
-
-    return commandFn();
-}
-
-function usage() {
-    console.info('\
-Usage: hapili COMMAND [OPTIONS]\n\
-\n\
-    deploy SERVER   Deploys Hapili to a target server, specified by its\n\
-                    dns name or ip address\n\
-\n\
-    master          Run Hapili as a master server, and start the web\n\
-                    server for access to the user interface\n\
-\n\
-    node MASTER     Run Hapili as a member node connected to a master\n\
-                    server with the specified dns or ip address\n\
-\n');
-}
-
-function deploy() {
-    var server = options._[1];
-    if (!server) {
-        console.error('Which server?');
-        return process.exit(1);
-    }
-
-    var rsync = 'rsync';
-    var args = ['-rv', '--exclude-from=.rsync-exclude', '.', server + ':/opt/hapili'];
-    var child = child_process.execFile('rsync', args, function(error, stdout, stderr) {
-        if (stdout) {
-            console.info(stdout);
-        }
-        if (stderr) {
-            console.error(stderr);
-        }
-        if (error) {
-            return process.exit(1);
-        }
-
-        console.info('ok.');
-    });
-}
+            var args = ['-rv', '--exclude-from=.rsync-exclude', '.', server + ':/opt/hapili'];
+            var child = child_process.execFile('rsync', args, function(error, stdout, stderr) {
+                if (stdout) {
+                    console.info(stdout);
+                }
+                if (stderr) {
+                    console.error(stderr);
+                }
+                if (error) {
+                    console.error(error);
+                    return process.exit(1);
+                }
+                console.info('ok.');
+            });
+        },
+    })
+    .command({
+        command: 'server',
+        description: 'Run Hapili as a master server, and start the web server for access to the user interface.',
+        builder: {
+        },
+        handler: argv => {
+            return require('./hapili-server.js');
+        },
+    })
+    .command({
+        command: 'node',
+        description: 'Run Hapili as a member node.',
+        builder: {
+        },
+        handler: argv => {
+            return require('./hapili-node.js');
+        },
+    })
+    .option('arch', {
+        description: 'Override the system os/arch identifier.',
+        default: os.arch() + '|' + os.platform(),
+    })
+    .option('log.level', {
+        alias: ['ll'],
+        description: 'Set the default logging output level.',
+        choices: ['fatal', 'error', 'warn', 'info', 'debug', 'trace'],
+        default: 'info',
+    })
+    .demandCommand()
+    .help('help')
+    .alias('help', 'h')
+    .wrap(yargs.terminalWidth())
+    .argv;

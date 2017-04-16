@@ -4,7 +4,9 @@ var logging = require('log4js');
 var Promise = require('bluebird');
 var util = require('util');
 
-var EventEmitter2 = require('./events2.js').EventEmitter2;
+var events = require('events');
+var events2 = require('./events2.js')
+var EventEmitter2 = events2.EventEmitter2;
 var GpioPort = require('./gpio.js').GpioPort;
 
 var log = logging.getLogger('buttons');

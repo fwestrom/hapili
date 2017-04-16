@@ -15,7 +15,8 @@
     "pi-gpio": "0.0.6",
     "qtort-microservices": "^1.1.0",
     "striptags": "^2.0.2",
-    "wiring-pi": "~2.0.0"
+    "wiring-pi": "~2.0.0",
+    "yargs": "^7.1.0"
   },
   "devDependencies": {
     "gulp": "^3.9.0"
@@ -26,6 +27,8 @@
     "deploy-hapili": "rsync -a --exclude-from=.rsync-exclude . hapili:/opt/hapili",
     "deploy-node-1": "rsync -a --exclude-from=.rsync-exclude . hapili-node-1:/opt/hapili",
     "start": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili\" -l hapili.log hapili.js",
-    "stop": "forever stop hapili"
+    "start-node": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili-node\" -l hapili-node.log hapili-node.js",
+    "stop": "forever stop hapili",
+    "stop-node": "forever stop hapili-node"
   }
 }

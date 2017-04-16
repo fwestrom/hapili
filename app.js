@@ -1,4 +1,4 @@
-module.exports = function app(_, inject, logging, Promise) {
+module.exports = function app(_, inject, logging, path, Promise) {
     var events = require('events');
     var log = logging.getLogger('app');
 
