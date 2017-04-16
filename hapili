@@ -6,9 +6,7 @@ let yargs = require('yargs');
 
 yargs
     .usage('Usage:\n  $0 <command> [options]')
-    .command(require('./lib/cli/deploy'))
-    .command(require('./lib/cli/server'))
-    .command(require('./lib/cli/node'))
+    .commandDir('./lib/cli')
     .option('arch', {
         description: 'Override the system os/arch identifier.',
         default: os.arch() + '|' + os.platform(),
