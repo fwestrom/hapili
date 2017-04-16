@@ -2,6 +2,7 @@
   "name": "hapili",
   "version": "0.0.1",
   "description": "Happy Pi Lights: A home controller and mobile-friendly web user interface for use with Raspberry Pi and basic electrical components.",
+  "main": "hapili",
   "dependencies": {
     "angular": "~1.3.9",
     "angular-resource": "~1.3.9",
@@ -18,16 +19,12 @@
     "wiring-pi": "~2.0.0",
     "yargs": "^7.1.0"
   },
-  "devDependencies": {
-    "gulp": "^3.9.0"
-  },
   "scripts": {
-    "deploy": "if [ -v $HAPILI_HOST ]; then echo \"Which HAPILI_HOST?\n\" >&2; else rsync -a --exclude-from=.rsync-exclude . $HAPILI_HOST:/opt/hapili; fi",
-    "Ddeploy": "if test \"${HAPILI_HOST+defined}\"; \nthen\n echo What HAPILI_HOST? & exit -1; else rsync -a --exclude-from=.rsync-exclude . $HAPILI_HOST:/opt/hapili; fi",
-    "deploy-hapili": "rsync -a --exclude-from=.rsync-exclude . hapili:/opt/hapili",
-    "deploy-node-1": "rsync -a --exclude-from=.rsync-exclude . hapili-node-1:/opt/hapili",
-    "start": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili\" -l hapili.log hapili.js",
-    "start-node": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili-node\" -l hapili-node.log hapili-node.js",
+    "deploy": "node hapili deploy",
+    "server": "node hapili server",
+    "node": "node hapili node",
+    "start": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili\" -l hapili.log hapili server",
+    "start-node": "forever start -a -w --minUptime=1000 --spinSleepTime=3000 --uid \"hapili-node\" -l hapili-node.log hapili node",
     "stop": "forever stop hapili",
     "stop-node": "forever stop hapili-node"
   }
